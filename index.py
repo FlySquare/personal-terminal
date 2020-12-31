@@ -17,6 +17,6 @@ def komutlar(var):
        os.system('sudo /opt/lampp/manager-linux-x64.run')
     
     
-
+figlet()
 x = input("umutcan@flysquare:~ ")
 komutlar(x)
