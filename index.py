@@ -1,6 +1,4 @@
 import os
-
-
 def figlet():
     print(" ")
     print("db    db .88b  d88. db    db d888888b ")
@@ -15,6 +13,16 @@ def komutlar(var):
 
     if var=="xampp":
        os.system('sudo /opt/lampp/manager-linux-x64.run')
+    elif var=="sil":
+        os.system('clear')
+        figlet()
+        x = input("umutcan@flysquare:~ ")
+        komutlar(x)
+    else:
+        print("Komut Yok!")
+        x = input("umutcan@flysquare:~ ")
+        komutlar(x)
+
     
     
 figlet()
