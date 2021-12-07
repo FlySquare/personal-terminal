@@ -1,43 +1,61 @@
 import os
 import subprocess
+import sys
+from datetime import datetime
+import glob
 
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
+class style():
+    BLACK = '\033[30m'
+    RED = '\033[31m'
+    GREEN = '\033[32m'
+    YELLOW = '\033[33m'
+    BLUE = '\033[34m'
+    MAGENTA = '\033[35m'
+    CYAN = '\033[36m'
+    WHITE = '\033[37m'
     UNDERLINE = '\033[4m'
-    
-def figlet():
-    print(" ")
-    print(bcolors.WARNING +"db    db .88b  d88. db    db d888888b "+bcolors.HEADER)
-    print("88    88 88'YbdP`88 88    88 `~~88~~' "+bcolors.OKBLUE)
-    print("88    88 88  88  88 88    88    88    "+bcolors.OKCYAN)
-    print("88    88 88  88  88 88    88    88    "+bcolors.OKGREEN)
-    print("88b  d88 88  88  88 88b  d88    88    "+bcolors.FAIL)
-    print("~Y8888P' YP  YP  YP ~Y8888P'    YP    "+ bcolors.ENDC)
-    print(" ")
+    RESET = '\033[0m'
 
 def komutlar(var):
-
-    if var=="xampp":
-        os.system('sudo /opt/lampp/manager-linux-x64.run')
-    elif var=="sil":
-        os.system('clear')
-        figlet()
-        x = input(bcolors.WARNING +"umutcan@flysquare:~ "+bcolors.ENDC)
-        komutlar(x)
+    now = datetime.now()
+    whereami = os.getcwd()
+    if var=="clear":
+        os.system('cls')
+        index()
+    elif var == "exit":
+        exit = input(now.strftime("%H:%M:%S")+" | Çıkış yapmak istediğine emin misin? (E/H): ")
+        if exit == "E" or exit == "e":
+            print(now.strftime("%H:%M:%S")+" | Çıkış Yapıldı!")
+            sys.exit()
+    elif var=="ls":
+        for file in os.listdir():
+            if(os.path.isdir(file)):
+                print(style.BLUE + file+"/"+ style.WHITE)
+            else:
+                print(style.GREEN + file + style.WHITE)
+        index()
+    elif var=="whereami":
+        print(whereami)
+        index()
+    elif var.startswith("git clone"):
+        words = var.split(' ')
+        os.system(words[0]+" "+words[1]+" https://gitlab.com/epazarsoft/opencart/modules/"+words[2]+"/"+words[3])
+        index()
+    elif var.startswith("cd "):
+        change = var.split(" ")
+        os.chdir(change[1])
+        index()
     else:
-        print(bcolors.FAIL+"Komut Yok!"+ bcolors.ENDC)
-        x = input(bcolors.WARNING +"umutcan@flysquare:~ "+bcolors.ENDC)
-        komutlar(x)
+        os.system(var)
+        index()
 
-    
-    
-figlet()
-x = input(bcolors.WARNING +"umutcan@flysquare:~ "+bcolors.ENDC)
-komutlar(x)
+def index():
+    whereami2 = os.getcwd()
+    now2 = datetime.now()
+    x = input(now2.strftime("%H:%M:%S")+" | "+whereami2+" ~ ")
+    komutlar(x)
+
+
+os.system('cls')
+print(style.WHITE)
+index()
