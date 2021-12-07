@@ -3,6 +3,7 @@ import subprocess
 import sys
 from datetime import datetime
 import glob
+import pygit2
 
 class style():
     BLACK = '\033[30m'
@@ -28,11 +29,13 @@ def komutlar(var):
             print(now.strftime("%H:%M:%S")+" | Çıkış Yapıldı!")
             sys.exit()
     elif var=="ls":
+        print("\n")
         for file in os.listdir():
             if(os.path.isdir(file)):
                 print(style.BLUE + file+"/"+ style.WHITE)
             else:
                 print(style.GREEN + file + style.WHITE)
+        print("\n")
         index()
     elif var=="whereami":
         print(whereami)
@@ -51,8 +54,12 @@ def komutlar(var):
 
 def index():
     whereami2 = os.getcwd()
+    if(os.path.isdir(whereami2+"/.git")):
+        repoBranch = style.CYAN+"("+pygit2.Repository('.').head.shorthand+") "+style.WHITE
+    else:
+        repoBranch = ""
     now2 = datetime.now()
-    x = input(now2.strftime("%H:%M:%S")+" | "+whereami2+" ~ ")
+    x = input(" "+now2.strftime("%H:%M:%S")+" | "+style.YELLOW+whereami2+style.WHITE+" ~ " + repoBranch +": ")
     komutlar(x)
 
 os.system('cls')
