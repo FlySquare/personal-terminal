@@ -55,7 +55,6 @@ def index():
     x = input(now2.strftime("%H:%M:%S")+" | "+whereami2+" ~ ")
     komutlar(x)
 
-
 os.system('cls')
 print(style.WHITE)
 index()
